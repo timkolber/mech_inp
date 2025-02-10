@@ -1,15 +1,19 @@
 [project]
 name = "mech_inp"
 version = "0.1.0"
-description = "Default template for PDM package"
+description = "Project repository for my implementation project for the seminar \"Mechanistic Interpretability\", held by Frederick Riemenschneider in WS 2024/25."
 authors = [
     {name = "Tim Kolber", email = "tim.kolber@stud.uni-heidelberg.de"},
 ]
 dependencies = []
-requires-python = "==3.11.*"
+requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
 
 [tool.pdm]
-distribution = false
+distribution = true
