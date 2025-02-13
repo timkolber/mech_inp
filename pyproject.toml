@@ -5,7 +5,7 @@ description = "Project repository for my implementation project for the seminar 
 authors = [
     {name = "Tim Kolber", email = "tim.kolber@stud.uni-heidelberg.de"},
 ]
-dependencies = []
+dependencies = ["numpy>=2.2.2", "sente==0.4.3", "torch>=2.6.0", "transformers>=4.48.3", "datasets>=3.2.0", "tiktoken>=0.8.0", "wandb>=0.19.6", "tqdm>=4.67.1"]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
