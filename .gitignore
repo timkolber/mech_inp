@@ -1,2 +1,6 @@
 .pdm-python
-data/cgos
+data/cgos/
+typings/
+output/slurm/
+.vscode/
+*__pycache__/
