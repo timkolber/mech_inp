@@ -2,5 +2,6 @@
 data/cgos/
 typings/
 output/slurm/
+output/logs/
 .vscode/
 *__pycache__/

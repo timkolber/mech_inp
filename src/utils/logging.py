@@ -9,7 +9,7 @@ def setup_logging(
     log_filename: str = "main.log", log_level: int = logging.INFO
 ) -> logging.Logger:
     """Set up logging to console and file"""
-    log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    log_format = "%(asctime)s - %(filename)s:%(funcName)s - %(levelname)s - %(message)s"
     date_format = "%Y-%m-%d %H:%M:%S"
 
     os.makedirs(log_output_directory, exist_ok=True)

@@ -4,18 +4,42 @@ from pathlib import Path
 from typing import List, cast
 
 from sente import Move, sgf
-from sente.exceptions import InvalidSGFException
+from sente.exceptions import IllegalMoveException, InvalidSGFException
 from tqdm import tqdm
+
+from utils.timeout import (
+    TimeoutException,
+    deactivate_loop_timeout,
+    setup_loop_timeout,
+)
 
 data_path = str(Path(__file__).parent.parent.parent / "data")
 logger = logging.getLogger("main")
 
 
-def get_moves_from_sgf(sgf_file_path: str) -> List[Move] | None:
+def get_moves_from_sgf(sgf_file_path: str, timeout: int = 100) -> List[Move] | None:
+    """
+    Loads an SGF file and extracts the list of moves.
+    
+    If the loading process takes longer than `timeout` seconds, returns None.
+    
+    :param sgf_file_path: Path to the SGF file.
+    :param timeout: Maximum time allowed for loading the SGF file.
+    :return: List of moves if successful, otherwise None.
+    """
+    setup_loop_timeout(timeout)
     try:
-        game = sgf.load(sgf_file_path, ignore_illegal_properties=False)
-    except InvalidSGFException:
+        game = sgf.load(sgf_file_path, ignore_illegal_properties=False, fix_file_format=False)
+        logger.debug(f"Loaded game from {sgf_file_path}")
+        deactivate_loop_timeout()
+    except TimeoutException:
+        logger.debug(f"Timeout loading SGF file: {sgf_file_path}")
         return None
+    except (InvalidSGFException, IllegalMoveException):
+        logger.debug(f"Invalid SGF file: {sgf_file_path}")
+        return None
+    finally:
+        deactivate_loop_timeout()
     game.play_default_sequence()
     moves = game.get_current_sequence()
     if any(isinstance(move, set) for move in moves):
@@ -47,20 +71,11 @@ class GoDataset:
             sgf_fp = str(sgf_file)
             logger.debug(f"Processing file: {sgf_fp}")
             moves = get_moves_from_sgf(sgf_fp)
-            logger.debug(f"Got moves of type: {type(moves)}")
-            (
-                logger.debug(f"Got moves of length: {len(moves)}")
-                if moves is not None
-                else None
-            )
             if moves is None:
-                logger.debug(f"Skipping {sgf_fp}")
                 continue
-            logger.debug(f"Processing moves from {sgf_fp}")
             for move in moves:
                 move_int = convert_move_to_int(move=move, board_length=9)
                 converted_game_moves.append(move_int)
-            logger.debug(f"Finished processing moves from {sgf_fp}")
             converted_games.append(converted_game_moves)
         return converted_games
 
