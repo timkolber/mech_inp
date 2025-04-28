@@ -1,0 +1,19 @@
+[project]
+name = "mech_inp"
+version = "0.1.0"
+description = "Project repository for my implementation project for the seminar \"Mechanistic Interpretability\", held by Frederick Riemenschneider in WS 2024/25."
+authors = [
+    {name = "Tim Kolber", email = "tim.kolber@stud.uni-heidelberg.de"},
+]
+dependencies = ["numpy>=2.2.2", "sente==0.4.3", "torch>=2.6.0", "transformers[torch]>=4.51.3", "datasets>=3.2.0", "tiktoken>=0.8.0", "wandb>=0.19.6", "tqdm>=4.67.1", "pytest>=8.3.4", "types-tqdm>=4.67.0.20241221", "scikit-learn>=1.6.1", "minGPT @ git+https://github.com/karpathy/minGPT.git"]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true

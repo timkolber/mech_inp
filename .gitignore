@@ -1,0 +1,14 @@
+.pdm-python
+.pdm-build
+data/cgos/
+typings/
+output/slurm/
+output/logs/
+.vscode/
+*__pycache__/
+data/examples/
+wandb/
+outputs/
+data/.nfs000000002177cf9800001068
+*.ckpt
+data/cktpt/
